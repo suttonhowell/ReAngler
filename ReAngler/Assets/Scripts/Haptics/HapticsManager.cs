@@ -30,30 +30,19 @@ public class HapticsManager : MonoBehaviour
 	}
 
 	// TODO: test TriggerVibration(), this is another function available, but it's for rumble
-	public void HapticsCalm(bool leftPad) // TODO: rename, support both at once?
+	public void HapticsCalm() // TODO: rename, support both at once?
 	{
 
-		ESteamControllerPad targetPad = leftPad ? ESteamControllerPad.k_ESteamControllerPad_Left : ESteamControllerPad.k_ESteamControllerPad_Right;
-		ushort durationOn = 0, durationOff = 0, repetitions = 0;
+		// ESteamControllerPad targetPad = leftPad ? ESteamControllerPad.k_ESteamControllerPad_Left : ESteamControllerPad.k_ESteamControllerPad_Right;
+		ushort durationOn = 500, durationOff = 65535, repetitions = 10000;
 
-		// Allows us to control which parameter settings we're testing and switch easily
-		switch (HAPTICS_CALM_PARAMS)
-		{
-			case 0:
-				durationOn = 1000;
-				durationOff = 1000;
-				repetitions = 10;
-				break;
-			case 1:
-				break;
-		}
-
-		SteamInput.Legacy_TriggerRepeatedHapticPulse(controllerHandle, targetPad, durationOn, durationOff, repetitions, 0);
+		SteamInput.Legacy_TriggerRepeatedHapticPulse(controllerHandle, ESteamControllerPad.k_ESteamControllerPad_Left, durationOn, durationOff, repetitions, 0);
+		SteamInput.Legacy_TriggerRepeatedHapticPulse(controllerHandle, ESteamControllerPad.k_ESteamControllerPad_Right, durationOn, durationOff, repetitions, 0);
 	}
 
 	public void HapticsHectic() // TODO: Is this ok? Or make it repeat forever until pressed? It goes a pretty long time rn before stopping
 	{
-		ushort durationOn = 10000, durationOff = 1000, repetitions = 1000;
+		ushort durationOn = 10000, durationOff = 1000, repetitions = 10000;
 		SteamInput.Legacy_TriggerRepeatedHapticPulse(controllerHandle, ESteamControllerPad.k_ESteamControllerPad_Left, durationOn, durationOff, repetitions, 0);
 		SteamInput.Legacy_TriggerRepeatedHapticPulse(controllerHandle, ESteamControllerPad.k_ESteamControllerPad_Right, durationOn, durationOff, repetitions, 0);
 	}

@@ -119,7 +119,7 @@ public class SimpleReactionManager : MonoBehaviour
 		Debug.Log("Started ReactionWait Coroutine at timestamp : " + Time.time);
 		//change sprite to neutral/no cue
 		ChangeSprite(1);
-		// hapticsManager.HapticsCalm();
+		hapticsManager.HapticsCalm();
 		//yield on a new YieldInstruction that waits for the set stage time
 		yield return new WaitForSeconds(currRound.currStage.time);
 
