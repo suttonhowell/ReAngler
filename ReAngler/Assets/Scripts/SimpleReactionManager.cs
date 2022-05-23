@@ -16,6 +16,7 @@ public class SimpleReactionManager : MonoBehaviour
 	public Sprite[] targetSprites = new Sprite[5];
 
 	private HapticsManager hapticsManager;
+	private AudioManager audioManager;
 
 	// Start is called before the first frame update
 	void Start()
@@ -30,6 +31,7 @@ public class SimpleReactionManager : MonoBehaviour
 		currStage = 0;
 
 		hapticsManager = GetComponent<HapticsManager>();
+		audioManager = GetComponent<AudioManager>();
 	}
 
 	// Update is called once per frame
@@ -48,6 +50,8 @@ public class SimpleReactionManager : MonoBehaviour
 					//end the stage
 					currRound.active = false;
 					hapticsManager.CancelHaptics();
+					audioManager.Stop(AudioManager.clipName.fishOnLine);
+					audioManager.Play(AudioManager.clipName.fishCaught);
 					//save the round as-is to the user scores, so all data is saved with stage info
 					userScores.Add(currRound);
 					//move to next stage and round
@@ -120,6 +124,7 @@ public class SimpleReactionManager : MonoBehaviour
 		//change sprite to neutral/no cue
 		ChangeSprite(1);
 		hapticsManager.HapticsCalm();
+		audioManager.Play(AudioManager.clipName.stillWater);
 		//yield on a new YieldInstruction that waits for the set stage time
 		yield return new WaitForSeconds(currRound.currStage.time);
 
@@ -129,6 +134,8 @@ public class SimpleReactionManager : MonoBehaviour
 		//active stage and change sprite
 		currRound.active = true;
 		hapticsManager.HapticsHectic();
+		audioManager.Stop(AudioManager.clipName.stillWater);
+		audioManager.Play(AudioManager.clipName.fishOnLine);
 		ChangeSprite(2);
 	}
 

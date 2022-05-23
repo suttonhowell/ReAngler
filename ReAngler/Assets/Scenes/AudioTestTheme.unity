@@ -333,7 +333,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f5f9785cbfc8e7419c77520e832a37c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HAPTICS_CALM_PARAMS: 0
 --- !u!4 &545596407
 Transform:
   m_ObjectHideFlags: 0
@@ -503,6 +502,7 @@ GameObject:
   - component: {fileID: 872577783}
   - component: {fileID: 872577785}
   - component: {fileID: 872577786}
+  - component: {fileID: 872577787}
   m_Layer: 0
   m_Name: centerTarget
   m_TagString: Target
@@ -606,7 +606,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f5f9785cbfc8e7419c77520e832a37c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HAPTICS_CALM_PARAMS: 0
+--- !u!114 &872577787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872577782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 626a9fb5ef6bb344d8fda362eccf1772, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stillWater: {fileID: 8300000, guid: 319bbff0681ccd34fb7611fb15faae03, type: 3}
+  fishCaught: {fileID: 8300000, guid: eabfe67a4160851479d2066e36d6dc8b, type: 3}
+  fishOnLine: {fileID: 8300000, guid: 8bdcf5d6f9a8c9d458057f37de2c5b04, type: 3}
 --- !u!1 &1187251540
 GameObject:
   m_ObjectHideFlags: 0
