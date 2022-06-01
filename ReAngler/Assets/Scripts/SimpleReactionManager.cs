@@ -17,10 +17,14 @@ public class SimpleReactionManager : MonoBehaviour
 
 	private HapticsManager hapticsManager;
 	private AudioManager audioManager;
+	private DataHandler dataHandler;
 
 	// Start is called before the first frame update
 	void Start()
 	{
+		dataHandler = GetComponent<DataHandler>();
+		if (dataHandler == null) throw new Exception("data handler creation error");
+
 		started = false;
 		stages = GetStageInfo();
 		userScores = new ArrayList();
@@ -31,7 +35,13 @@ public class SimpleReactionManager : MonoBehaviour
 		currStage = 0;
 
 		hapticsManager = GetComponent<HapticsManager>();
+		//verify haptics manager
+		if (hapticsManager == null) throw new Exception("haptics manager could not be found");
+
 		audioManager = GetComponent<AudioManager>();
+		//verify audio manager
+		if (audioManager == null) throw new Exception("audio manager could not be found");
+
 	}
 
 	// Update is called once per frame
@@ -64,11 +74,10 @@ public class SimpleReactionManager : MonoBehaviour
 			return;
 		}//end of if currRound is not null
 
-		//Debug.Log("Time since level load: " + Time.timeSinceLevelLoad);
 		//remove instructions and begin when user presses space 
 		if (!started && (Input.GetKeyUp("space") || Input.GetKeyUp(KeyCode.JoystickButton0)))
 		{
-			print("Space key was pressed, starting reaction");
+			print("Space key was pressed, starting reaction experiment");
 			Destroy(GameObject.Find("instructions"));
 			started = true;
 			NextRound();
@@ -79,18 +88,26 @@ public class SimpleReactionManager : MonoBehaviour
 	// hard coded for now until integration
 	private List<Stage> GetStageInfo()
 	{
+		//get info from data handler
+		List<Dictionary<string, object>> stageImport = dataHandler.StageReader();
+		if (stageImport == null) throw new Exception("Data Handler stage passing failed");
+
+		// create stage objects and populate list
 		List<Stage> stages = new List<Stage>();
-		//timing between game start and cue in ms (only value so far before vibrations)
-		float timing = 1.5f;
 
-		stages.Add(new Stage(timing));
+		//timing between game start and cue in s
+		float timing = 0f;
+		int audio = 0;
+		int haptics = 0;
 
-		// this is just me adding fake data for testing
-		// remove when we decide on stages
-		stages.Add(new Stage(1.7f));
-		stages.Add(new Stage(3f));
-		stages.Add(new Stage(1.0f));
-		stages.Add(new Stage(2.2f));
+		for (int i=0; i < stageImport.Count; i++){
+			timing = Convert.ToSingle(stageImport[i]["delay"]);
+			audio = Convert.ToInt32(stageImport[i]["audioEnabled"]);
+			audio = Convert.ToInt32(stageImport[i]["hapticsEnabled"]);
+			stages.Add(new Stage(timing, audio, haptics));
+			Debug.Log( "Added stage " + stageImport[i]["stageNum"] + " with delay " + timing + " to stage list.\n");
+		}
+
 		return stages;
 	}
 
@@ -112,7 +129,6 @@ public class SimpleReactionManager : MonoBehaviour
 
 	private void ChangeSprite(int spriteNum)
 	{
-		Debug.Log("changed sprite");
 		target.GetComponent<SpriteRenderer>().sprite = targetSprites[spriteNum];
 	}
 
@@ -162,9 +178,13 @@ public class SimpleReactionManager : MonoBehaviour
 class Stage
 {
 	public float time;
-	public Stage(float time)
+	public bool audioEnabled;
+	public bool hapticsEnabled;
+	public Stage(float time, int audioEnabled, int hapticsEnabled)
 	{
 		this.time = time;
+		this.audioEnabled = Convert.ToBoolean(audioEnabled);
+		this.hapticsEnabled = Convert.ToBoolean(hapticsEnabled);
 	}
 }
 
