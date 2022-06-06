@@ -57,7 +57,8 @@ public class SimpleReactionManager : MonoBehaviour
 	void Update()
 	{
 		//only allow user to play once the researchers have unlocked the program
-		if ((Input.GetKeyDown(KeyCode.U))){
+		if ((Input.GetKeyDown(KeyCode.U)))
+		{
 			locked = false;
 		}
 		//remove instructions and begin when user presses space 
@@ -101,13 +102,15 @@ public class SimpleReactionManager : MonoBehaviour
 						return;
 					}
 					//check for new round
-					else if (currStage-1 > 0 && stages[currStage-1].round != stages[currStage].round){
+					else if (currStage - 1 > 0 && stages[currStage - 1].round != stages[currStage].round)
+					{
 						StartCoroutine(RoundOver(3));
-					} 
-					else {
+					}
+					else
+					{
 						StartCoroutine(WaitForNextRound(3));
 					}
-					
+
 				}//end of user reacted
 			}//end of if current round is active
 			return;
@@ -133,13 +136,14 @@ public class SimpleReactionManager : MonoBehaviour
 		int haptics = 0;
 		int roundNum = 0;
 
-		for (int i=0; i < stageImport.Count; i++){
+		for (int i = 0; i < stageImport.Count; i++)
+		{
 			timing = Convert.ToSingle(stageImport[i]["delay"]);
 			audio = Convert.ToInt32(stageImport[i]["audioEnabled"]);
-			audio = Convert.ToInt32(stageImport[i]["hapticsEnabled"]);
+			haptics = Convert.ToInt32(stageImport[i]["hapticsEnabled"]);
 			roundNum = Convert.ToInt32(stageImport[i]["round"]);
 			stages.Add(new Stage(timing, audio, haptics, roundNum));
-			Debug.Log( "Added stage " + stageImport[i]["stageNum"] + " with delay " + timing + " to stage list.\n");
+			Debug.Log("Added stage " + stageImport[i]["stageNum"] + " with delay " + timing + " to stage list.\n");
 		}
 
 		return stages;
@@ -153,7 +157,7 @@ public class SimpleReactionManager : MonoBehaviour
 
 		Debug.Log("Starting round " + currStage + 1);
 		currRound = new Round(stages[currStage]);
-		
+
 		//update haptics settings
 		hapticsManager.SetHaptics(currRound.currStage.hapticsEnabled);
 		//update audio settings
@@ -167,7 +171,8 @@ public class SimpleReactionManager : MonoBehaviour
 		target.GetComponent<SpriteRenderer>().sprite = targetSprites[spriteNum];
 	}
 
-	private void ChangeOverlay(int spriteNum){
+	private void ChangeOverlay(int spriteNum)
+	{
 		overlay.GetComponent<SpriteRenderer>().sprite = overlaySprites[spriteNum];
 	}
 

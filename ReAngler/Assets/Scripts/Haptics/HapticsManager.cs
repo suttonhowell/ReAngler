@@ -19,14 +19,15 @@ public class HapticsManager : MonoBehaviour
 		// TODO: Check periodically for controller still connected?
 	}
 
-	public void SetHaptics(bool hapticsOn){
+	public void SetHaptics(bool hapticsOn)
+	{
 		enableHaptics = hapticsOn;
 	}
 
 	// Search for the controller until found. Just checks with the steam API, not Unity
 	private IEnumerator FindController()
 	{
-		if (!enableHaptics) yield break; // Don't need the handle if no haptics
+		// if (!enableHaptics) yield break; // Don't need the handle if no haptics
 
 		InputHandle_t[] inputHandles = new InputHandle_t[Constants.STEAM_INPUT_MAX_COUNT];
 
