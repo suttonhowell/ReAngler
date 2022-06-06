@@ -7,6 +7,7 @@ public class SimpleReactionManager : MonoBehaviour
 {
 	//this is just for the instructions to disappear
 	bool started;
+	bool locked;
 	List<Stage> stages;
 	ArrayList userScores;
 	GameObject target;
@@ -28,6 +29,7 @@ public class SimpleReactionManager : MonoBehaviour
 		if (dataHandler == null) throw new Exception("data handler creation error");
 
 		started = false;
+		locked = true;
 		stages = GetStageInfo();
 		userScores = new ArrayList();
 		//find the overlay
@@ -54,8 +56,12 @@ public class SimpleReactionManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		//only allow user to play once the researchers have unlocked the program
+		if ((Input.GetKeyDown(KeyCode.U))){
+			locked = false;
+		}
 		//remove instructions and begin when user presses space 
-		if (!started && (Input.GetKeyDown("space") || Input.GetKeyUp(KeyCode.JoystickButton0)))
+		if (!locked && !started && (Input.GetKeyDown("space") || Input.GetKeyUp(KeyCode.JoystickButton0)))
 		{
 			print("Space key was pressed, starting reaction experiment");
 			ChangeOverlay(0);
@@ -216,6 +222,7 @@ public class SimpleReactionManager : MonoBehaviour
 		ChangeOverlay(2);
 		ChangeSprite(0);
 		started = false;
+		locked = true;
 		//After we have waited 5 seconds print the time again.
 		Debug.Log("Finished roundover Coroutine at timestamp : " + Time.time);
 	}
