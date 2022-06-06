@@ -91,13 +91,12 @@ public class SimpleReactionManager : MonoBehaviour
 						currRound = null;
 						//save scores
 						DataHandler.SaveResults(userScores);
+						ChangeOverlay(3);
 						return;
 					}
 					//check for new round
 					else if (currStage-1 > 0 && stages[currStage-1].round != stages[currStage].round){
-						ChangeOverlay(2);
-						ChangeSprite(0);
-						started = false;
+						StartCoroutine(RoundOver(3));
 					} 
 					else {
 						StartCoroutine(WaitForNextRound(3));
@@ -203,6 +202,22 @@ public class SimpleReactionManager : MonoBehaviour
 		Debug.Log("Finished WaitForNextRound Coroutine at timestamp : " + Time.time);
 
 		NextRound();
+	}
+
+	IEnumerator RoundOver(int cooldown)
+	{
+		//Print the time of when the function is first called.
+		Debug.Log("Started roundover Coroutine at timestamp : " + Time.time);
+		//show user they got it right, wait for cooldown until next round
+		ChangeSprite(3);
+
+		//yield on a new YieldInstruction that waits for 5 seconds.
+		yield return new WaitForSeconds(cooldown);
+		ChangeOverlay(2);
+		ChangeSprite(0);
+		started = false;
+		//After we have waited 5 seconds print the time again.
+		Debug.Log("Finished roundover Coroutine at timestamp : " + Time.time);
 	}
 
 }
