@@ -156,6 +156,8 @@ public class SimpleReactionManager : MonoBehaviour
 		
 		//update haptics settings
 		hapticsManager.SetHaptics(currRound.currStage.hapticsEnabled);
+		//update audio settings
+		audioManager.SetAudio(currRound.currStage.audioEnabled);
 
 		StartCoroutine(ReactionWait());
 	}
