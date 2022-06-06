@@ -30,6 +30,10 @@ public class DataHandler : MonoBehaviour
         return data;
     }
 
+    public static void SaveResults(ArrayList userScores){
+        
+    }
+
 	private List<Dictionary<string, object>> ReadInStages()
 	{
 		var list = new List<Dictionary<string, object>>();
