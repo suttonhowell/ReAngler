@@ -538,7 +538,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stillWater: {fileID: 8300000, guid: 319bbff0681ccd34fb7611fb15faae03, type: 3}
   fishCaught: {fileID: 8300000, guid: eabfe67a4160851479d2066e36d6dc8b, type: 3}
-  fishOnLine: {fileID: 8300000, guid: 8bdcf5d6f9a8c9d458057f37de2c5b04, type: 3}
+  fishOnLine: {fileID: 8300000, guid: 8cd331f475a221643ae2760b3e0558d3, type: 3}
 --- !u!114 &872577788
 MonoBehaviour:
   m_ObjectHideFlags: 0

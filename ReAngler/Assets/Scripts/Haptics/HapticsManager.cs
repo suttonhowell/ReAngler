@@ -60,7 +60,7 @@ public class HapticsManager : MonoBehaviour
 	{
 		if (!enableHaptics) return;
 
-		ushort durationOn = 10000, durationOff = 1000, repetitions = 10000;
+		ushort durationOn = 3600, durationOff = 400, repetitions = 41; // = .164 sec of 250 Hz
 		SteamInput.Legacy_TriggerRepeatedHapticPulse(controllerHandle, ESteamControllerPad.k_ESteamControllerPad_Left, durationOn, durationOff, repetitions, 0);
 		SteamInput.Legacy_TriggerRepeatedHapticPulse(controllerHandle, ESteamControllerPad.k_ESteamControllerPad_Right, durationOn, durationOff, repetitions, 0);
 	}
