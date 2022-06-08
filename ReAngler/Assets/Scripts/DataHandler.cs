@@ -40,8 +40,11 @@ public class DataHandler : MonoBehaviour
 
 		foreach (Round round in userScores)
 		{
-			string roundData = round.currStage.round + "," + round.currStage.time + "," +
-					round.currStage.audioEnabled + "," + round.currStage.hapticsEnabled + "," + round.userTime;
+			int audioEnabled = round.currStage.audioEnabled ? 1 : 0;
+			int hapticsEnabled = round.currStage.hapticsEnabled ? 1 : 0;
+
+			string roundData = round.currStage.round + "," + round.currStage.time
+					+ "," + audioEnabled + "," + hapticsEnabled + "," + round.userTime;
 			writer.WriteLine(roundData);
 		}
 
