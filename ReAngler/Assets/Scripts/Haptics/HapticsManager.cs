@@ -19,10 +19,15 @@ public class HapticsManager : MonoBehaviour
 		// TODO: Check periodically for controller still connected?
 	}
 
+	public void SetHaptics(bool hapticsOn)
+	{
+		enableHaptics = hapticsOn;
+	}
+
 	// Search for the controller until found. Just checks with the steam API, not Unity
 	private IEnumerator FindController()
 	{
-		if (!enableHaptics) yield break; // Don't need the handle if no haptics
+		// if (!enableHaptics) yield break; // Don't need the handle if no haptics
 
 		InputHandle_t[] inputHandles = new InputHandle_t[Constants.STEAM_INPUT_MAX_COUNT];
 
@@ -55,7 +60,7 @@ public class HapticsManager : MonoBehaviour
 	{
 		if (!enableHaptics) return;
 
-		ushort durationOn = 10000, durationOff = 1000, repetitions = 10000;
+		ushort durationOn = 3600, durationOff = 400, repetitions = 41; // = .164 sec of 250 Hz
 		SteamInput.Legacy_TriggerRepeatedHapticPulse(controllerHandle, ESteamControllerPad.k_ESteamControllerPad_Left, durationOn, durationOff, repetitions, 0);
 		SteamInput.Legacy_TriggerRepeatedHapticPulse(controllerHandle, ESteamControllerPad.k_ESteamControllerPad_Right, durationOn, durationOff, repetitions, 0);
 	}
